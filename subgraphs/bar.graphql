@@ -1,0 +1,142 @@
+# Bar
+type Bar @entity {
+  # Contract address
+  id: ID!
+
+  # Decimals
+  decimals: Int!
+
+  # Name
+  name: String!
+
+  # Trams token
+  trams: Bytes!
+
+  # Symbol
+  symbol: String!
+
+  # Total xTrams supply
+  totalSupply: BigDecimal!
+
+  # Ratio xTrams per Trams
+  ratio: BigDecimal!
+
+  # xTrams minted
+  xTramsMinted: BigDecimal!
+
+  # xTrams burned
+  xTramsBurned: BigDecimal!
+
+  # Trams staked
+  tramsStaked: BigDecimal!
+
+  # Trams staked USD
+  tramsStakedUSD: BigDecimal!
+
+  # Trams harvested
+  tramsHarvested: BigDecimal!
+
+  # Trams harvested USD
+  tramsHarvestedUSD: BigDecimal!
+
+  # xTrams age
+  xTramsAge: BigDecimal!
+
+  # xTrams age destroyed
+  xTramsAgeDestroyed: BigDecimal!
+
+  # Users in the bar
+  users: [User!]! @derivedFrom(field: "bar")
+
+  # Updated at
+  updatedAt: BigInt!
+}
+
+# User
+type User @entity {
+  # ID
+  id: ID!
+
+  # Bar
+  bar: Bar
+
+  # xTrams (balance)
+  xTrams: BigDecimal!
+
+  # xTrams In
+  xTramsIn: BigDecimal!
+
+  # xTrams Out
+  xTramsOut: BigDecimal!
+
+  # Minted
+  xTramsMinted: BigDecimal!
+
+  # Burned
+  xTramsBurned: BigDecimal!
+
+  # xTrams offset
+  xTramsOffset: BigDecimal!
+
+  # xTrams age
+  xTramsAge: BigDecimal!
+
+  # xTrams age destroyed
+  xTramsAgeDestroyed: BigDecimal!
+
+  # Staked
+  tramsStaked: BigDecimal!
+
+  # Sum of $ at time of staking
+  tramsStakedUSD: BigDecimal!
+
+  # Harvested
+  tramsHarvested: BigDecimal!
+
+  # Sum of $ at time of harvesting
+  tramsHarvestedUSD: BigDecimal!
+
+  # To get bar pending trams (xTrams * staked / bar.totalSupply)
+
+  # Trams Out
+  tramsOut: BigDecimal!
+
+  # Trams In
+  tramsIn: BigDecimal!
+
+  # USD Out
+  usdOut: BigDecimal!
+
+  # USD In
+  usdIn: BigDecimal!
+
+  # Updated at
+  updatedAt: BigInt!
+
+  # trams offset
+  tramsOffset: BigDecimal!
+
+  # usd offset
+  usdOffset: BigDecimal!
+}
+
+# History
+enum Timeframe {
+  Day
+}
+
+type History @entity {
+  id: ID!
+  date: Int!
+  timeframe: Timeframe!
+  tramsStaked: BigDecimal!
+  tramsStakedUSD: BigDecimal!
+  tramsHarvested: BigDecimal!
+  tramsHarvestedUSD: BigDecimal!
+  xTramsAge: BigDecimal!
+  xTramsAgeDestroyed: BigDecimal!
+  xTramsMinted: BigDecimal!
+  xTramsBurned: BigDecimal!
+  xTramsSupply: BigDecimal!
+  ratio: BigDecimal!
+}

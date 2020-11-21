@@ -1,0 +1,34 @@
+specVersion: 0.0.3
+description: TramsSwap API
+repository: https://github.com/tramsswap/tramsswap-subgraph
+schema:
+  file: ./tramsswap.graphql
+dataSources:
+  - kind: ethereum/contract
+    name: MasterChef
+    network: mainnet
+    source:
+      address: '0xc2edad668740f1aa35e4d8f227fb8e17dca888cd'
+      abi: MasterChef
+      startBlock: 10736242
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.4
+      language: wasm/assemblyscript
+      file: ../src/tramsswap.ts
+      entities:
+        - MasterChef
+        - MasterChefPool
+      abis:
+        - name: MasterChef
+          file: ../node_modules/@tramsswap/core/build/contracts/MasterChef.json
+      eventHandlers:
+        - event: Deposit(indexed address,indexed uint256,uint256)
+          handler: handleDeposit
+        - event: EmergencyWithdraw(indexed address,indexed uint256,uint256)
+          handler: handleEmergencyWithdraw
+        - event: Withdraw(indexed address,indexed uint256,uint256)
+          handler: handleWithdraw
+      callHandlers:
+        - function: set(uint256,uint256,bool)
+          handler: handleSetPoolAllocPoint
